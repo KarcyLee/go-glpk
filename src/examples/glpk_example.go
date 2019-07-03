@@ -21,16 +21,13 @@
 
 package main
 
-//import "fmt"
-//import "github.com/lukpank/go-glpk/glpk"
-
+import "C"
 import (
 	"fmt"
 	"glpk"
 )
 
-
-func main() {
+func lp_sample(){
 	lp := glpk.New()
 	lp.SetProbName("sample")
 	lp.SetObjName("Z")
@@ -74,4 +71,15 @@ func main() {
 	fmt.Println()
 
 	lp.Delete()
+}
+
+func graph_sample()  {
+
+
+}
+
+
+func main() {
+	//lp_sample()
+	graph_sample()
 }

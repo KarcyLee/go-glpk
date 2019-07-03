@@ -622,3 +622,45 @@ func TestGarbageCollection(t *testing.T) {
 		lp2.Delete()
 	}
 }
+
+func TestMCMF(t *testing.T) {
+	mcmf := &MCMF{}
+	mcmf.New()
+	mcmf.AddVertices(8)
+
+	startNodes := [...]int{0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 5, 6}
+	endNodes := [...]int{1, 2, 3, 4, 5, 6, 4, 5, 6, 4, 5, 6, 7, 7, 7};
+	capacities := [...]float64{15, 15, 15, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 10, 20, 15};
+	unitCosts := [...]float64{0, 0, 0, 9, 12, 10, 8, 15, 12, 13, 17, 19, 0, 0, 0};
+	for i := 0; i < 15; i++ {
+		mcmf.AddArc(startNodes[i]+1, endNodes[i]+1, 0., capacities[i], unitCosts[i])
+	}
+	fmt.Println("start solve")
+	arcs := mcmf.Solve(1, 8)
+
+	for _, arc := range arcs {
+		fmt.Printf("arc=%v\n", arc)
+	}
+
+}
+
+func TestMCMF2(t *testing.T) {
+	mcmf := &MCMF{}
+	mcmf.New()
+	mcmf.AddVertices(10)
+
+	startNodes := [...]int{0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8}
+	endNodes := [...]int{1, 2, 3, 4, 5, 6, 7, 8, 4, 5, 6, 7, 8, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9}
+	capacities := [...]float64{15, 15, 15, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 5, 10, 15, 5, 10};
+	unitCosts := [...]float64{0, 0, 0, 15, 15, 16, 11, 11, 13, 11, 15, 9, 6, 8, 12, 11, 7, 8, 0, 0, 0, 0, 0};
+	for i := 0; i < 23; i++ {
+		mcmf.AddArc(startNodes[i]+1, endNodes[i]+1, 0., capacities[i], unitCosts[i])
+	}
+	fmt.Println("start solve")
+	arcs := mcmf.Solve(1, 10)
+
+	for _, arc := range arcs {
+		fmt.Printf("arc=%v\n", arc)
+	}
+
+}
